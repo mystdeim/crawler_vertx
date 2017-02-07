@@ -1,0 +1,42 @@
+
+version = '0.1'
+
+apply plugin: 'java'
+
+ext {
+    vertx = "3.3.3"
+}
+
+repositories {
+    jcenter()
+//    mavenCentral()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile "io.vertx:vertx-web:$vertx"
+//    compile "io.vertx:vertx-web:$vertx:client"
+//    compile 'io.vertx:vertx-sockjs-service-proxy:3.3.3'
+//    compile 'io.vertx:vertx-service-proxy:3.3.3'
+
+    testCompile 'junit:junit:4.12'
+}
+
+// gradle clean fatJar build
+task fatJar {
+    doFirst {
+        jar {
+            manifest {
+                attributes 'Implementation-Title': 'FatJar',
+                        'Implementation-Version': version,
+                        'Main-Class': 'Main'
+            }
+            baseName = project.name + '-all'
+            from {
+                configurations.compile.collect {
+                    it.isDirectory() ? it : zipTree(it)
+                }
+            }
+        }
+    }
+}
