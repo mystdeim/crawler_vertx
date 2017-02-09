@@ -4,7 +4,7 @@ version = '0.1'
 apply plugin: 'java'
 
 ext {
-    vertx = "3.3.3"
+    vertx = "3.3.2"
 }
 
 repositories {
@@ -15,7 +15,7 @@ repositories {
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile "io.vertx:vertx-web:$vertx"
-//    compile "io.vertx:vertx-web:$vertx:client"
+//    compile "io.vertx:vertx-web:$vertx:client@js"
 //    compile 'io.vertx:vertx-sockjs-service-proxy:3.3.3'
 //    compile 'io.vertx:vertx-service-proxy:3.3.3'
 
