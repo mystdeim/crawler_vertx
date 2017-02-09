@@ -30,17 +30,23 @@ public class FrontendVerticle extends AbstractVerticle {
         SockJSHandlerOptions sockJSHandlerOptions = new SockJSHandlerOptions().setHeartbeatInterval(10_000);
 
         SockJSHandler sockJSHandler = SockJSHandler.create(vertx, sockJSHandlerOptions);
-        PermittedOptions inboundPermitted1 = new PermittedOptions().setAddress("start");
+        PermittedOptions inboundPermitted = new PermittedOptions()
+                .setAddress("start");
+        PermittedOptions outboundPermitted = new PermittedOptions()
+                .setAddress("new_url");
         BridgeOptions options = new BridgeOptions();
-        sockJSHandler.bridge(options.addInboundPermitted(inboundPermitted1));
+        sockJSHandler.bridge(options
+                .addInboundPermitted(inboundPermitted)
+                .addOutboundPermitted(outboundPermitted));
         router.route("/eventbus/*").handler(sockJSHandler);
 
 
 
         eb.consumer("start", msg -> {
 
+            JsonObject object = new JsonObject(msg.body().toString());
+
             Runnable firstMsg = () -> {
-                JsonObject object = new JsonObject(msg.body().toString());
                 eb.send("download", object.getString("url"));
                 out.println(msg.body());
             };
@@ -48,10 +54,10 @@ public class FrontendVerticle extends AbstractVerticle {
             if (null != downloadVId) {
                 vertx.undeploy(downloadVId, event -> {
                     out.printf("Undeploy: %s \n", downloadVId);
-                    deployDownload(firstMsg);
+                    deployDownload(firstMsg, object.getInteger("deep"), object.getInteger("limit"));
                 });
             } else {
-                deployDownload(firstMsg);
+                deployDownload(firstMsg, object.getInteger("deep"), object.getInteger("limit"));
             }
         });
 
@@ -67,9 +73,9 @@ public class FrontendVerticle extends AbstractVerticle {
 
     private volatile String downloadVId = null;
 
-    private void deployDownload(Runnable task) {
+    private void deployDownload(Runnable task, int deep, int limit) {
         DeploymentOptions options = new DeploymentOptions().setWorker(true).setWorkerPoolName(Main.WORKERPOOL_NAME);
-        DownloadVerticle downloadVerticle = new DownloadVerticle(1, 1);
+        DownloadVerticle downloadVerticle = new DownloadVerticle(deep, limit);
         vertx.deployVerticle(downloadVerticle, options, event -> {
             if (event.succeeded()) {
                 downloadVId = event.result();

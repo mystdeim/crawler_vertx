@@ -16,22 +16,23 @@
                 <form class="form-inline">
                     <div class="form-group">
                         <label for="url">Url</label>
-                        <input type="text" class="form-control" id="url" placeholder="example.com"  style="width: 250px;", value="megapl.ru">
+                        <input type="text" class="form-control" id="url" placeholder="example.com"  style="width: 250px;", value="http://megapl.ru">
                     </div>
                     <div class="form-group">
                         <label for="deep">Deep</label>
-                        <input type="email" class="form-control" id="deep" placeholder="1" style="width: 50px;">
+                        <input type="email" class="form-control" id="deep" placeholder="1" style="width: 50px;", value="2">
                     </div>
                     <div class="form-group">
                         <label for="limit">Limit</label>
-                        <input type="email" class="form-control" id="limit" placeholder="1" style="width: 50px;">
+                        <input type="email" class="form-control" id="limit" placeholder="1" style="width: 50px;", value="5">
                     </div>
                     <div class="form-group">
                         <label for="speed">Speed (Req/s)</label>
-                        <input type="email" class="form-control" id="speed" placeholder="10" style="width: 50px;">
+                        <input type="email" class="form-control" id="speed" placeholder="10" style="width: 50px;", value="10">
                     </div>
                     <button type="submit" class="btn btn-default" id="start">Start</button>
                     <button type="submit" class="btn btn-default" id="stop">Stop</button>
+                    <button type="submit" class="btn btn-default" id="clear">Clear</button>
                 </form>
                 <table class="table table-hover">
                     <thead>
@@ -40,7 +41,7 @@
                         <th>path</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="urls">
 
                     </tbody>
                 </table>

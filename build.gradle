@@ -19,6 +19,9 @@ dependencies {
 //    compile 'io.vertx:vertx-sockjs-service-proxy:3.3.3'
 //    compile 'io.vertx:vertx-service-proxy:3.3.3'
 
+    compile "org.jsoup:jsoup:1.10.2"
+
+
     testCompile 'junit:junit:4.12'
 }
 

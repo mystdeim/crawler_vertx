@@ -11,6 +11,11 @@ function start() {
         // send a message
         // eb.send('some-address', {name: 'tim', age: 587});
         // eb.send('address', {a: "op"});
+
+        eb.registerHandler('new_url', function (error, msg) {
+            console.log('received a message: ' + JSON.stringify(msg));
+            $("#urls").append("<tr><td>" + msg.body.id + "</td><td>" + msg.body.url + "</td></tr>");
+        });
     }
     eb.onclose = function () {
         console.log("closed");
@@ -34,10 +39,14 @@ $(function () {
         // console.log(e);
         eb.send('start', {
             url: $("#url").val(),
-            deep: $("#deep").val(),
-            limit: $("#limit").val(),
-            speed: $("#speed").val()
+            deep: parseInt($("#deep").val()),
+            limit: parseInt($("#limit").val()),
+            speed: parseInt($("#speed").val())
         });
+    });
+
+    $(document.body).on('click', '#clear', function(e) {
+        $("#urls").empty();
     });
 
 });

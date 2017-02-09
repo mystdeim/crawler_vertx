@@ -12,6 +12,8 @@ public class Main {
 
     public static final String WORKERPOOL_NAME = "download-pool";
 
+    public static final String ADDRESS_NEW_URL = "new_url";
+
     // -Dvertx.disableFileCaching=true
     public static void main(String[] args) {
 
