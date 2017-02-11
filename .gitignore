@@ -3,6 +3,5 @@
 /.vertx
 /.idea/
 /build/
-/gradle/*
 /out/
 /.gradle*
