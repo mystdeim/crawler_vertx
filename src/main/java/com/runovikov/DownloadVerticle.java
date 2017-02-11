@@ -73,6 +73,7 @@ public class DownloadVerticle extends AbstractVerticle {
                     json.put("url", urlTxt);
                     json.put("id", id);
                     json.put("size", readableFileSize(doc.toString().length()));
+                    json.put("status", 200); // because parse finished successfully
 
                     Elements elements = doc.select("a");
                     for (Element element : elements) {
