@@ -4,7 +4,7 @@ Example of single-page application for traversing website through inner links.
 
 ![Screenshot](https://raw.githubusercontent.com/mystdeim/crawler_vertx/master/doc/screenshot.png)
 
-## Start
+## Install & start
 
 ```
 git clone git@github.com:mystdeim/crawler_vertx.git
