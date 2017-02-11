@@ -89,7 +89,7 @@ public class DownloadVerticle extends AbstractVerticle {
                         }
                     }
                     future.complete(json);
-                }, res -> {
+                }, false, res -> {
                     out.printf("Downloaded: %s [%s] \n", msg.body(), Thread.currentThread());
                     eb.publish(Main.ADDRESS_NEW_URL, res.result());
                 });

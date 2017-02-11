@@ -2,7 +2,6 @@ package com.runovikov;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
-import io.vertx.core.WorkerExecutor;
 
 import static java.lang.System.out;
 
@@ -29,12 +28,6 @@ public class Main {
 
 
         Vertx vertx = Vertx.vertx(options);
-
-        int poolSize = 10;
-        long maxExecuteTime = 120_000;
-        WorkerExecutor executor = vertx.createSharedWorkerExecutor(WORKERPOOL_NAME, poolSize, maxExecuteTime);
-
         vertx.deployVerticle(new FrontendVerticle());
     }
-
 }

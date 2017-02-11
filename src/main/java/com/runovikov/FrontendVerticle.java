@@ -75,7 +75,9 @@ public class FrontendVerticle extends AbstractVerticle {
     private volatile String downloadVId = null;
 
     private void deployDownload(Runnable task, JsonObject object) {
-        DeploymentOptions options = new DeploymentOptions().setWorkerPoolName(Main.WORKERPOOL_NAME);
+        DeploymentOptions options = new DeploymentOptions()
+                .setWorkerPoolName(Main.WORKERPOOL_NAME)
+                .setWorkerPoolSize(20);
         DownloadVerticle downloadVerticle = new DownloadVerticle(
                 object.getInteger("deep"), object.getInteger("limit"), object.getInteger("speed"));
         vertx.deployVerticle(downloadVerticle, options, event -> {
