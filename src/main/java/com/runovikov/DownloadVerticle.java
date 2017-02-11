@@ -37,11 +37,6 @@ public class DownloadVerticle extends AbstractVerticle {
     @Override
     public void start() throws Exception {
 
-        HttpClientOptions options = new HttpClientOptions().
-                setProtocolVersion(HttpVersion.HTTP_1_1).
-                setSsl(true).
-                setTrustAll(true);
-
         final EventBus eb = getVertx().eventBus();
         set = Collections.synchronizedSet(new HashSet<>());
 

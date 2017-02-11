@@ -70,6 +70,8 @@ public class FrontendVerticle extends AbstractVerticle {
                 .createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8080);
+
+        out.println("Started on http://localhost:8080");
     }
 
     private volatile String downloadVId = null;
