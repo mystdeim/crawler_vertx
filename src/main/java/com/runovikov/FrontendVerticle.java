@@ -1,8 +1,8 @@
+package com.runovikov;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.eventbus.EventBus;
-import io.vertx.core.eventbus.Message;
-import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.StaticHandler;
@@ -10,8 +10,6 @@ import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.PermittedOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.handler.sockjs.SockJSHandlerOptions;
-
-import java.util.function.Consumer;
 
 import static java.lang.System.out;
 
@@ -45,19 +43,22 @@ public class FrontendVerticle extends AbstractVerticle {
         eb.consumer("start", msg -> {
 
             JsonObject object = new JsonObject(msg.body().toString());
+            JsonObject sObj = new JsonObject();
+            sObj.put("deep", 0);
+            sObj.put("url", object.getString("url"));
 
             Runnable firstMsg = () -> {
-                eb.send("download", object.getString("url"));
+                eb.send("download", sObj);
                 out.println(msg.body());
             };
 
             if (null != downloadVId) {
                 vertx.undeploy(downloadVId, event -> {
                     out.printf("Undeploy: %s \n", downloadVId);
-                    deployDownload(firstMsg, object.getInteger("deep"), object.getInteger("limit"));
+                    deployDownload(firstMsg, object);
                 });
             } else {
-                deployDownload(firstMsg, object.getInteger("deep"), object.getInteger("limit"));
+                deployDownload(firstMsg, object);
             }
         });
 
@@ -73,9 +74,10 @@ public class FrontendVerticle extends AbstractVerticle {
 
     private volatile String downloadVId = null;
 
-    private void deployDownload(Runnable task, int deep, int limit) {
-        DeploymentOptions options = new DeploymentOptions().setWorker(true).setWorkerPoolName(Main.WORKERPOOL_NAME);
-        DownloadVerticle downloadVerticle = new DownloadVerticle(deep, limit);
+    private void deployDownload(Runnable task, JsonObject object) {
+        DeploymentOptions options = new DeploymentOptions().setWorkerPoolName(Main.WORKERPOOL_NAME);
+        DownloadVerticle downloadVerticle = new DownloadVerticle(
+                object.getInteger("deep"), object.getInteger("limit"), object.getInteger("speed"));
         vertx.deployVerticle(downloadVerticle, options, event -> {
             if (event.succeeded()) {
                 downloadVId = event.result();

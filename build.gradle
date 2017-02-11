@@ -5,6 +5,8 @@ apply plugin: 'java'
 
 ext {
     vertx = "3.3.2"
+    guava = "21.+"
+    jsoup = "1.10.2"
 }
 
 repositories {
@@ -15,11 +17,14 @@ repositories {
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile "io.vertx:vertx-web:$vertx"
+
+    compile "io.vertx:vertx-rx-java:$vertx"
 //    compile "io.vertx:vertx-web:$vertx:client@js"
 //    compile 'io.vertx:vertx-sockjs-service-proxy:3.3.3'
 //    compile 'io.vertx:vertx-service-proxy:3.3.3'
 
-    compile "org.jsoup:jsoup:1.10.2"
+    compile "com.google.guava:guava:$guava"
+    compile "org.jsoup:jsoup:$jsoup"
 
 
     testCompile 'junit:junit:4.12'

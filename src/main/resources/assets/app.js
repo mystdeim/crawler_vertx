@@ -14,7 +14,8 @@ function start() {
 
         eb.registerHandler('new_url', function (error, msg) {
             console.log('received a message: ' + JSON.stringify(msg));
-            $("#urls").append("<tr><td>" + msg.body.id + "</td><td>" + msg.body.url + "</td></tr>");
+            $("#urls").append("<tr><td>" + msg.body.id + "</td><td>" + msg.body.url +
+                "</td><td>" + msg.body.time + "</td><td>" + msg.body.size +"</td></tr>");
         });
     }
     eb.onclose = function () {

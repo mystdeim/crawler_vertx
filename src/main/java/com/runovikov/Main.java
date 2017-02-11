@@ -1,3 +1,5 @@
+package com.runovikov;
+
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.WorkerExecutor;
@@ -12,6 +14,7 @@ public class Main {
 
     public static final String WORKERPOOL_NAME = "download-pool";
 
+    public static final String ADDRESS_DOWNLOAD = "download";
     public static final String ADDRESS_NEW_URL = "new_url";
 
     // -Dvertx.disableFileCaching=true
